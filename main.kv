@@ -1,0 +1,294 @@
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+ScreenManager:
+	transition: SlideTransition()
+	LoginScreen:
+	CreateAccountScreen:
+	CreateProfileScreen:
+	AddFriendsScreen:
+	HomeScreen:
+
+<LoginScreen>:
+	name: 'login_screen'
+	MDLabel:
+		text: 'Kukris Messenger'
+		halign: 'center'
+		font_style: 'H3'
+		theme_text_color: 'Custom'
+		text_color: app.theme_cls.primary_color
+		pos_hint: {'center_x':0.5, 'center_y':0.85} 
+
+	MDTextField:
+		id: email
+		size_hint: 1, None
+		height: "30dp"
+		mode: 'rectangle'
+		hint_text: "Email"
+		pos_hint: {'center_x':0.5, 'center_y':0.6}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+	
+	MDTextField:
+		id: password
+		size_hint: 1, None
+		height: "30dp"
+		password: True
+		mode: 'rectangle'
+		hint_text: "Password"
+		pos_hint: {'center_x':0.5, 'center_y':0.5}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+
+	MDFillRoundFlatButton:
+		id: SignIn
+		text: "Sign In"
+		pos_hint: {'center_x': 0.7, 'center_y': 0.4}	
+		size_hint_x: None
+		width: 100
+		on_press: root.sign_in()
+		on_release: app.root.current='create_profile_screen' if root.checkerLS == "NoError" else "login_screen"
+	
+	MDRectangleFlatButton:
+		text: "Or Create A New Account!"
+		pos_hint: {'center_x': 0.5, 'center_y': 0.15}	
+		size_hint_x: None
+		width: 300
+		on_release: app.root.current = 'create_account_screen'
+	
+	MDLabel:
+		text: 'By U.N.I.T.E.D'
+		halign: 'center'
+		font_style: 'H6'
+		theme_text_color: 'Custom'
+		text_color: (1,0,0,1)
+		pos_hint: {'center_x':0.5, 'center_y':0.05} 
+	MDLabel:
+		text: '------OR------'
+		halign: 'center'
+		font_style: 'Caption'
+		theme_text_color: 'Custom'
+		text_color: (0,0,0,0.6)
+		pos_hint: {'center_x':0.5, 'center_y':0.325} 
+	MDLabel:
+		text: '------OR------'
+		halign: 'center'
+		font_style: 'Caption'
+		theme_text_color: 'Custom'
+		text_color: (0,0,0,0.6)
+		pos_hint: {'center_x':0.5, 'center_y':0.2} 
+
+	MDRectangleFlatButton:
+		text: "Login Using Previous Credentials"
+		pos_hint: {'center_x': 0.5, 'center_y': 0.25}	
+		size_hint_x: None
+		width: 150
+		on_press: root.check_refresh()
+		on_release: app.root.current = 'home_screen' if root.Refresh=='True' else 'login_screen'
+
+<CreateAccountScreen>:
+	name: 'create_account_screen'
+
+	MDLabel:
+		text: 'Create A New Account'
+		halign: 'center'
+		font_style: 'H4'
+		theme_text_color: 'Custom'
+		text_color: app.theme_cls.primary_color
+		pos_hint: {'center_x':0.5, 'center_y':0.85} 
+	
+	MDTextField:
+		id: email
+		size_hint: 1, None
+		height: "30dp"
+		mode: 'rectangle'
+		hint_text: "Enter Your Email"
+		pos_hint: {'center_x':0.5, 'center_y':0.6}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+	
+	MDTextField:
+		id: password
+		size_hint: 1, None
+		height: "30dp"
+		mode: 'rectangle'
+		helper_text: 'Must Be Of Atleast 6 Characters'
+		helper_text_mode: 'persistent'
+		password: True
+		hint_text: "Create A Password"
+		pos_hint: {'center_x':0.5, 'center_y':0.5}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+	
+	MDTextField:
+		id: cnfrm_password
+		size_hint: 1, None
+		height: "30dp"
+		mode: 'rectangle'
+		helper_text: 'Must Be Of Atleast 6 Characters'
+		helper_text_mode: 'persistent'
+		password: True
+		hint_text: "Confirm Password"
+		pos_hint: {'center_x':0.5, 'center_y':0.4}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+	
+	MDFillRoundFlatButton:
+		text: "Create Account!"
+		pos_hint: {'center_x': 0.7, 'center_y': 0.2}	
+		size_hint_x: None
+		width: 300
+		on_press: root.create_account()
+		on_release: 
+			app.root.current = 'login_screen' if root.checkerCAS == "NoError" else 'create_account_screen'
+	
+	MDRoundFlatButton:
+		text: "Back"
+		pos_hint: {'center_x': 0.2, 'center_y': 0.2}	
+		size_hint_x: None
+		width: 300
+		on_press:
+		on_release: 
+			app.root.current = 'login_screen'
+
+<CreateProfileScreen>:
+	name: 'create_profile_screen'
+	
+	MDToolbar:
+		title: 'Complete Your Profile'
+
+	MDRoundFlatIconButton:
+		text: 'Upload Your Profile Picture'
+		icon: 'file-upload' 
+		pos_hint: {'center_x': 0.5,'center_y':0.8}
+		size_hint_x: None
+		width: 350
+		on_release: root.openfile()
+
+	MDTextField:
+		id: first_name
+		size_hint: .33, None
+		height: "30dp"
+		hint_text: "First Name"
+		pos_hint: {'center_x':0.17, 'center_y':0.7}
+		size_hint_x: None
+		width: 100
+		line_color_focus: 0, 0, 1, 1
+	MDTextField:
+		id: middle_name
+		size_hint: 0.33, None
+		height: "30dp"
+		hint_text: "Middle Name"
+		pos_hint: {'center_x':0.47, 'center_y':0.7}
+		size_hint_x: None
+		width: 100
+		line_color_focus: 0, 0, 1, 1
+	MDTextField:
+		id: last_name
+		size_hint: 0.33, None
+		height: "30dp"
+		hint_text: "Last Name"
+		pos_hint: {'center_x':0.79, 'center_y':0.7}
+		size_hint_x: None
+		width: 100
+		line_color_focus: 0, 0, 1, 1
+	MDTextField:
+		id: address
+		size_hint: 1, None
+		height: "30dp"
+		hint_text: "Address"
+		multiline: True
+		pos_hint: {'center_x':0.5, 'center_y':0.6}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+	MDDropDownItem:
+		id: drop_item
+		pos_hint: {'center_x': .15, 'center_y': .5}
+		text: 'Gender'
+		on_release: root.menu()
+	MDTextField:
+		id: year_of_birth
+		size_hint: 1, None
+		height: "30dp"
+		hint_text: "Year Of Birth"
+		input_filter: 'int'
+		max_text_length: 4
+		pos_hint: {'center_x':0.5, 'center_y':0.4}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+	MDTextField:
+		id: mobile_number
+		size_hint: 1, None
+		height: "30dp"
+		hint_text: "Mobile No.(+91)"
+		input_filter: 'int'
+		max_text_length: 10
+		pos_hint: {'center_x':0.5, 'center_y':0.3}
+		size_hint_x: None
+		width: 350
+		line_color_focus: 0, 0, 1, 1
+	MDFillRoundFlatButton:
+		text: 'Agree & Continue'
+		pos_hint: {'center_x': 0.5,'center_y':0.2}
+		size_hint_x: None
+		width: 100
+		on_press: root.agree_and_continue()
+		on_release: app.root.current = 'add_friends_screen' if root.checkerCPS == 'NoError' else 'create_profile_screen'
+		
+<AddFriendsScreen>:
+	name: 'add_friends_screen'
+	
+	MDToolbar:
+		title:'People You May Know'
+		
+	ScrollView:
+		MDList:
+			id:container
+			OneLineListItem:
+				text: 'CONTINUE ---->'Icon
+				on_release: app.root.current = 'home_screen'
+			TwoLineIconListItem:
+				id: list1
+				text: f'{root.users_all[0]}'
+				secondary_text: f'User ID: {root.keys_all[0]}'
+				on_release: root.sendreq("list1")
+			TwoLineIconListItem:
+				id: list2
+				text: f'{root.users_all[1]}' if len(root.users_all) >=2 else 'More Friends Joining Soon'
+				secondary_text: f'User ID: {root.keys_all[1]}'if len(root.users_all) >=2 else 'Stay Tuned'
+				on_release: root.sendreq("list2")
+			TwoLineIconListItem:
+				id: list3
+				text: f'{root.users_all[2]}'if len(root.users_all) >=3 else 'More Friends Joining Soon'
+				secondary_text: f'User ID: {root.keys_all[2]}'if len(root.users_all) >=3 else 'Stay Tuned'
+				on_release: root.sendreq("list3")
+			TwoLineIconListItem:
+				text: f'{root.users_all[3]}'if len(root.users_all) >=4 else 'More Friends Joining Soon'
+				secondary_text: f'User ID: {root.keys_all[3]}'if len(root.users_all) >=4 else 'Stay Tuned'
+			TwoLineIconListItem:
+				text: f'{root.users_all[4]}'if len(root.users_all) >=5 else 'More Friends Joining Soon'
+				secondary_text: f'User ID: {root.keys_all[4]}'if len(root.users_all) >=5 else 'Stay Tuned'
+			
+			
+<HomeScreen>:
+	name: 'home_screen'
+	
+	BoxLayout:
+		orientation: "vertical"
+		
+		MDToolbar:
+			id: toolbar
+			title: 'Kukris'
+			right_action_items: [["cloud-upload", lambda x: root.upload()],["account-search", lambda x: app.callback()],["dots-vertical", lambda x: app.callback()]]
+		
+		MDLabel:
+			text: 'Hello! I Still Don\'t Know What To Make Out Of It, Let Me Know What It Should Be.'
+			halign: 'center'
+			font_style: 'H4'
+			
