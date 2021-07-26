@@ -18,13 +18,13 @@ from urllib.request import urlopen
 from kivy.network.urlrequest import UrlRequest
 import os
 
-### Important Keys To help your app connect to firebase storage,database. Can be found on Firebase Console.
+### firebase credentials. Can be found on Firebase Console.
 config = {
   "apiKey": "",
   "authDomain": "",
   "databaseURL": "",
   "storageBucket": "",
-  "serviceAccountId": ""# Optional, You'll need this only if you know what it means.
+  "serviceAccountId": "" # Optional
 }
 
 firebase = pyrebase.initialize_app(config)
